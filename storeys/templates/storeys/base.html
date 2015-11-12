@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    {% block meta %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name = "format-detection" content = "telephone=no" />
+
+    <link href="{% static 'storeys/css/storeys.css' %}" rel="stylesheet" >
+    {% block css %}{% endblock %}
+
+    <script type="text/javascript">
+        var require = {
+          baseUrl: '{% static "" %}',
+          config: {
+            settings: {
+              ROOT_URLCONF: '{% static "urls.js" %}',
+              STATIC_ROOT: '{% static "" %}',
+              URL_ROOT: ''
+            }
+          },
+          packages: [
+            {
+              name: 'storeys',
+              location: 'storeys/js',
+              main: 'index'
+            }
+          ]
+        };
+    </script>
+    {% block pre_require_js %}{% endblock %}
+    <script data-main="{% static 'common/main.js' %}" src="{% static 'storeys/lib/requirejs/require.js' %}"
+            type="text/javascript" charset="utf-8">
+    </script>
+  </head>
+  <body id="{% block bodyid %}{% endblock %}" class="{% block bodyclasses %}{% endblock %}" {% block bodyattrs %}{% endblock %}>
+    {% block content %}{% endblock %}
+  </body>
+</html>
