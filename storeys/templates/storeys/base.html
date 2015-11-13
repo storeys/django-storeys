@@ -15,6 +15,18 @@
         var require = {
           baseUrl: '{% static "" %}',
           config: {
+            'storeys/index': {
+              verbose: true
+            },
+            'storeys/template/loader': {
+              verbose: true
+            },
+            'storeys/core/urlresolver': {
+              verbose: true
+            },
+            'storeys/core/handlers/base': {
+              verbose: true
+            },
             settings: {
               ROOT_URLCONF: '{% static "urls.js" %}',
               STATIC_ROOT: '{% static "" %}',
@@ -27,7 +39,8 @@
               location: 'storeys/js',
               main: 'index'
             }
-          ]
+          ],
+          waitSeconds: 15
         };
     </script>
     {% block pre_require_js %}{% endblock %}
@@ -36,6 +49,5 @@
     </script>
   </head>
   <body id="{% block bodyid %}{% endblock %}" class="{% block bodyclasses %}{% endblock %}" {% block bodyattrs %}{% endblock %}>
-    {% block content %}{% endblock %}
   </body>
 </html>
