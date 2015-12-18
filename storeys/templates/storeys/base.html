@@ -16,16 +16,16 @@
           baseUrl: '{% static "" %}',
           config: {
             'storeys/index': {
-              verbose: true
+              verbose: false
             },
             'storeys/template/loader': {
-              verbose: true
+              verbose: false
             },
             'storeys/core/urlresolver': {
-              verbose: true
+              verbose: false
             },
             'storeys/core/handlers/base': {
-              verbose: true
+              verbose: false
             },
             settings: {
               ROOT_URLCONF: '{% static "urls.js" %}',
@@ -49,6 +49,6 @@
             type="text/javascript" charset="utf-8">
     </script>
   </head>
-  <body id="{% block bodyid %}{% endblock %}" class="{% block bodyclasses %}{% endblock %}" {% block bodyattrs %}{% endblock %}>
+  <body id="{% block bodyid %}{% endblock %}" class="storeys loading {% block bodyclasses %}{% endblock %}" {% block bodyattrs %}{% endblock %}>
   </body>
 </html>
