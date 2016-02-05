@@ -9,7 +9,7 @@ import sys
 from django.apps import apps
 from django.conf import settings
 from django.template.base import TemplateDoesNotExist
-from django.template.loader import BaseLoader
+from django.template.loaders.base import Loader
 from django.utils._os import safe_join
 from django.utils import six
 
@@ -33,7 +33,7 @@ def calculate_app_template_dirs():
 app_template_dirs = calculate_app_template_dirs()
 
 
-class AppStaticDirectoriesLoader(BaseLoader):
+class AppStaticDirectoriesLoader(Loader):
     is_usable = True
 
     def get_template_sources(self, template_name, template_dirs=None):
