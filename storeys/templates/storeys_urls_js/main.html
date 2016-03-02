@@ -1,0 +1,12 @@
+define(
+    ['storeys/conf/urls'],
+    function(urls) {
+      var url = urls.url,
+          include = urls.include;
+
+      return [
+          {% for url in urls %}
+              url({% for value in url %}{{ value|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endfor %}
+      ];
+    }
+);

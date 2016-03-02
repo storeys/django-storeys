@@ -1,0 +1,11 @@
+define(
+    ['storeys/conf/urls', 'storeys/contrib/auth/decorators'],
+    function(urls, decorators, views) {
+      var url = urls.url,
+
+      return [
+          {% for url in urls %}
+              url({% for value in url %}{{ value|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endfor %}
+      ];
+    }
+);
