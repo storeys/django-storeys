@@ -1,11 +1,17 @@
 import os
 import ast
 import fnmatch
-from django_storeys.utils import parse_ast_tree
+from storeys.utils import parse_ast_tree
 from django.conf import settings
 from django.template import loader, Context
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand
+
+
+TEST_CASE = {
+    'base_path': './test',
+    'settings_path': 'test/main_app',
+}
 
 
 class StoreysUrlsNotFound(Exception):
@@ -27,33 +33,40 @@ class StoreysUrlsSettingsPyNotFound(Exception):
 class Command(BaseCommand):
     help = 'Creates a static "urls.js" files inside static folder. '
 
+    def add_arguments(self, parser):
+        parser.add_argument('is_test', nargs='?', type=str)
+
     def handle(self, *args, **options):
-        settings_path = False
-        settings_root = ''
 
         if not hasattr(settings, 'BASE_DIR') or not getattr(
                 settings, 'BASE_DIR', False):
             raise ImproperlyConfigured(
                 'The collect_storey_routes command needs settings.BASE_DIR to be set.')
 
-        for root, dirnames, filenames in os.walk('.'):
+        base_path = TEST_CASE['base_path'] if 'is_test' in options.keys() and \
+            options['is_test']=='test' else '.'
+
+        settings_path = False
+        for root, dirnames, filenames in os.walk(base_path):
             if 'settings.py' in filenames:
                 settings_path = os.path.join(settings.BASE_DIR, root)
                 settings_root = root
         if not settings_path:
             raise StoreysUrlsSettingsPyNotFound()
 
-        create_js_file(settings_path+'/urls.py', '', 'main.html')
+        create_js_file(settings_path+'/urls.py', base_path, '.', 'main.html')
 
         testCases = []
-        for root, dirnames, filenames in os.walk('.'):
+        for root, dirnames, filenames in os.walk(base_path):
             if root != settings_root:
                 for filename in fnmatch.filter(filenames, 'urls.py'):
                     urls_file_path = os.path.join(root, filename)[2:]
-                    create_js_file(urls_file_path, root, 'included.html')
+                    if 'test' in base_path:
+                            root = root.replace('/test', '')
+                    create_js_file(urls_file_path, base_path, root, 'included.html')
 
 
-def create_js_file(urls_file_path, root, template):
+def create_js_file(urls_file_path, base_path, root, template, ):
     with open(urls_file_path) as f:
         source = f.read()
     urls = parse_ast_tree(source)
@@ -63,7 +76,7 @@ def create_js_file(urls_file_path, root, template):
         t = loader.get_template('storeys_urls_js/%s' % template)
         c = Context({ 'urls': urls })
         result = t.render(c)
-    folder_path = '%s/static/%s' % (settings.BASE_DIR, root)
+    folder_path = '%s/static/%s' % (base_path, root)
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
     with open(folder_path + '/urls.js','w') as f:
