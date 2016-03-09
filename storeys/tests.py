@@ -9,26 +9,22 @@ class UrlsParseSuccess(TestCase):
 
     def test_urls_parse_success(self):
         call_command('collect_storeyjs_routes', *['test'], **{})
-        self.assertTrue(os.path.isfile('./test/static/urls.js'))
-        self.assertTrue(os.path.isfile('./test/static/additional_app/urls.js'))
+        self.assertTrue(os.path.isfile('./test_dir/additional_app/static/additional_app/urls.js'))
+        self.assertTrue(os.path.isfile('./test_dir/storeys/static/storeys/urls.js'))
 
-        with open('./test/static/additional_app/urls.js') as f:
+        with open('./test_dir/additional_app/static/additional_app/urls.js') as f:
             file_content = f.read()
-        self.assertEqual(file_content.count("url("), 6)
+        self.assertEqual(file_content.count("url("), 2)
         self.assertEqual(file_content.count(
             "url("), file_content.count("test_success"))
 
-        # Temporary stub
-        with open('./test/static/urls.js') as f:
+        with open('./test_dir/storeys/static/storeys/urls.js') as f:
             file_content = f.read()
-        self.assertEqual(file_content.count("url("), 6)
-        self.assertEqual(file_content.count("test_success"), 3)
+        self.assertEqual(file_content.count("url("), 2)
+        self.assertEqual(file_content.count("test_success"), 2)
 
-        # Test case for 'non_exported_urlpatterns'
-        # with open('./test/static/urls.js') as f:
-        #     file_content = f.read()
-        # self.assertEqual(file_content.count("url("), 3)
-        # self.assertEqual(file_content.count("url("), file_content.count("test_success"))
+        # Check. 'static' folder wasn't created at the excluded app.
+        self.assertFalse(os.path.isdir('./test_dir/additional_app2/static'))
 
 
 class UrlsParseErrors(TestCase):
@@ -37,31 +33,27 @@ class UrlsParseErrors(TestCase):
         template_not_exists_flag = False
 
         # Replase template path with broken path
-        file_path = './test/main_app/urls.py'
+        file_path = './test_dir/additional_app/urls.py'
         content = file_read(file_path)
         file_write(file_path, content.replace('storeys_urls_js/main.html',
                                               'notexist/main.html'))
-
         with self.assertRaises(TemplateDoesNotExist) as e:
             call_command('collect_storeyjs_routes', *['test'], **{})
-
         file_write(file_path, content)
 
     def test_urls_parse_entries_not_found(self):
         template_not_exists_flag = False
 
         # Replase all needed functions with uninteresting for script functions
-        file_path = './test/additional_app/urls.py'
+        file_path = './test_dir/additional_app/urls.py'
         content = file_read(file_path)
-        empty_content = content.replace('TemplateView.as_view','empty_view')\
-            .replace('StoreysView.as_view', 'empty_view.as_view')\
-            .replace('include(', 'empty_include(')
+        empty_content = content.replace('TemplateView.as_view', 'TempView.as_view')\
+            .replace('StoreysView.as_view', 'TempView.as_view')\
+            .replace('include(', 'include_test(')
 
         file_write(file_path, empty_content)
-
         with self.assertRaises(StoreysUrlsNotFound) as e:
             call_command('collect_storeyjs_routes', *['test'], **{})
-
         file_write(file_path, content)
 
 
