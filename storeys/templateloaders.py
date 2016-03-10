@@ -8,11 +8,10 @@ import sys
 
 from django.apps import apps
 from django.conf import settings
-from django.template.base import TemplateDoesNotExist
+from django.template import TemplateDoesNotExist
 from django.template.loaders.base import Loader
 from django.utils._os import safe_join
 from django.utils import six
-
 
 def calculate_app_template_dirs():
     if six.PY2:
