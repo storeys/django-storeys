@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <!-- <link href="./css/storeys.css" rel="stylesheet" > -->
+    <link rel="stylesheet" href="static/css/qunit.css">
+    <script type="text/javascript">
+      var require = {
+        baseUrl: '../test_dir/',
+        config: {
+          settings: {
+            // settings for storeys app
+          },
+          'storeys/index': {
+            verbose: true
+          },
+          'storeys/template/loader': {
+            verbose: true
+          },
+          'storeys/core/urlresolver': {
+            verbose: true
+          },
+          'storeys/core/handlers/base': {
+            verbose: true
+          }
+        },
+        packages: [
+          {
+            name: 'storeys',
+            location: '../submodules/storeys/storeys/js',
+            main: 'index'
+          }
+        ]
+      }
+    </script>
+
+  </head>
+  <body>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+      <script data-main="static/js/main" src="../submodules/require/require.js"
+              type="text/javascript" charset="utf-8">
+      </script>
+  </body>
+</html>

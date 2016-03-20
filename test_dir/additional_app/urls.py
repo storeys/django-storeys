@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = patterns(
     'test',
-    url(r'^test_success_creceipt-(?P<pk>[0-9]+)$',
+    url(r'^test_success/creceipt-(?P<pk>[0-9]+)/$',
         StoreysView.as_view(
             template_name='storeys_urls_js/main.html',
             prerender_content='storeys_urls_js/actions.htm'
