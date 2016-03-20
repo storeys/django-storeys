@@ -1,7 +1,8 @@
 define(
-    ['storeys/conf/urls', 'storeys/contrib/auth/decorators'],
-    function re(urls, decorators, views) {
-      var url = urls.url;
+    ['storeys/conf/urls', 'storeys/contrib/auth/decorators', 'storeys/views/generic/base'],
+    function(urls, decorators, views) {
+      var url = urls.url,
+          view = views.View;
 
       return [
           {% for url in urls %}

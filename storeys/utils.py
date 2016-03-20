@@ -76,9 +76,9 @@ def parse_url_node(node):
                 yield "'%s'" % arg.s
             elif isinstance(arg, ast.Call):
                 if isinstance(arg.args[0], ast.Str):
-                    yield "include('%s')" % arg.args[0].s
+                    yield "include('%s')" % (arg.args[0].s).replace('.','/')
                 elif isinstance(arg.args[0], ast.Attribute):
-                    yield "include('%s')" % '.'.join(get_recursive_ast_include(arg.args[0], []))
+                    yield "include('%s')" % ('.'.join(get_recursive_ast_include(arg.args[0], []))).replace('.','/')
     else:
         for arg in node.args:
             if isinstance(arg, ast.Str):
