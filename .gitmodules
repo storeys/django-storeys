@@ -1,9 +1,3 @@
 [submodule "submodules/storeys"]
 	path = submodules/storeys
 	url = https://github.com/storeys/storeys.git
-[submodule "require"]
-	path = require
-	url = https://github.com/requirejs/requirejs.git
-[submodule "submodules/require"]
-	path = submodules/require
-	url = https://github.com/requirejs/requirejs.git
