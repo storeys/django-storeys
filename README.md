@@ -7,3 +7,15 @@ Using `Storeys` with Django
 
 ---
 
+
+
+To Run Tests
+============
+
+```
+pip install virtualenv
+virtualenv venv/
+source ./venv/bin/activate
+pip install -r requirements.txt
+python tests/manage.py
+```

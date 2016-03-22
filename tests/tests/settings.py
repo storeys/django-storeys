@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storeys',
+    'tests',
+    'additional_app',
+    'additional_app2'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -51,7 +54,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'storeys.urls'
+ROOT_URLCONF = 'tests.urls'
 
 TEMPLATES = [
     {
