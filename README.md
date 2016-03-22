@@ -13,6 +13,9 @@ To Run Tests
 ============
 
 ```
+git submodule sync --recursive
+git submodule update --init --recursive
+
 pip install virtualenv
 virtualenv venv/
 source ./venv/bin/activate
