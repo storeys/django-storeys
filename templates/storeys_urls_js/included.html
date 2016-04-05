@@ -1,8 +1,8 @@
 define(
     ['storeys/conf/urls', 'storeys/contrib/auth/decorators', 'storeys/views/generic/base'],
-    function(urls, decorators, views) {
+    function(urls, decorators, base) {
       var url = urls.url,
-          view = views.View;
+          TemplateView = base.TemplateView;
 
       return [
           {% for url in urls %}

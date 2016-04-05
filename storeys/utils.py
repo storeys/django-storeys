@@ -90,7 +90,8 @@ def parse_url_node(node):
                         loader.get_template(kw_obj.value.s)
                     kwargs.append("'%s'" % kw_obj.value.s)
                 yield "%s.%s(%s)" % (
-                    n_node.value.id,
+                    # n_node.value.id,
+                    'TemplateView',
                     n_node.attr,
                     ', '.join(kwargs)
                 )

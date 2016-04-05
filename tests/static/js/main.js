@@ -2,8 +2,9 @@
 
 require.config({
     paths: {
+        'jquery' : 'http://code.jquery.com/jquery-1.12.1.min',
         'QUnit': 'static/libs/qunit',
-        'nunjucks': 'static/libs/nunjucks'
+        'slib': '../submodules/storeys/storeys/lib'
     },
     shim: {
        'QUnit': {
@@ -26,7 +27,7 @@ define('settings', ['module'], function(module) {
         instance = {};
 
     instance.DEFAULT_URL = '/receipts/';
-    instance.ROOT_URLCONF = 'additional_app/static/additional_app/urls';
+    instance.ROOT_URLCONF = 'tests/static/tests/urls';
     instance.ROOT_HASHCONF = 'app/hashes';
     instance.MIDDLEWARE_CLASSES = [
     ];

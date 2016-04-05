@@ -1,9 +1,9 @@
 define(
     ['storeys/conf/urls', 'storeys/contrib/auth/decorators', 'storeys/views/generic/base'],
-    function(urls) {
+    function(urls, decorators, base) { {
       var url = urls.url,
           include = urls.include,
-          view = base.View;
+          TemplateView = base.TemplateView;
 
 
       return [

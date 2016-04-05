@@ -10,7 +10,7 @@ urlpatterns = patterns(
     'test',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test_success_1/', include('additional_app.urls')),
-    url(r'^additional_app2/', include('additional_app2.urls')),
+    url(r'^excluded_app/', include('additional_app2.urls')),
     url(r'^test_success_2/(?P<pk>[0-9]+)/$',
         StoreysView.as_view(
             template_name='storeys_urls_js/main.html',
@@ -30,6 +30,6 @@ urlpatterns = patterns(
 
 non_exported_urlpatterns = (
     urlref(module_name='admin.site.urls'),
-    urlref(module_name='tests.additional_app2.urls'),
+    urlref(module_name='additional_app2.urls'),
     urlref(name='test_exclude')
 )
