@@ -28,8 +28,8 @@
               verbose: false
             },
             settings: {
-              ROOT_URLCONF: '{% static "urls.js" %}',
-              ROOT_HASHCONF: '{% static "hashes.js" %}',
+              ROOT_URLCONF: '{% static storeys.app_path %}urls.js',
+              ROOT_HASHCONF: '{% static storeys.app_path %}hashes.js',
               STATIC_ROOT: '{% static "" %}',
               URL_ROOT: '/',
               DEFAULT_URL: '{{ request.path }}'
@@ -40,16 +40,21 @@
               name: 'storeys',
               location: 'storeys/js',
               main: 'index'
+            },
+            {
+              name: 'slib',
+              location: 'storeys/lib',
             }
           ],
           waitSeconds: 15
         };
     </script>
     {% block pre_require_js %}{% endblock %}
-    <script data-main="{% static 'common/main.js' %}" src="{% static 'storeys/lib/require.js' %}"
+    <script data-main="{% static storeys.app_path %}main.js" src="{% static 'storeys/lib/require.js' %}"
             type="text/javascript" charset="utf-8">
     </script>
   </head>
   <body id="{% block bodyid %}{% endblock %}" class="storeys loading {% block bodyclasses %}{% endblock %}" {% block bodyattrs %}{% endblock %}>
+    {% block content %}{% endblock %}
   </body>
 </html>
