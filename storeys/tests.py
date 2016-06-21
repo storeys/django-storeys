@@ -3,7 +3,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.template import TemplateDoesNotExist
 from django.core.management import call_command
-from storeys.management.commands.collect_storeyjs_routes import StoreysUrlsNotFound
+from storeys.management.commands.collectstatic_storeys import StoreysUrlsNotFound
 
 
 class UrlsParseSuccess(TestCase):
