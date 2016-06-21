@@ -1,14 +1,14 @@
 define(
     ['storeys/conf/urls', 'storeys/contrib/auth/decorators', 'storeys/views/generic/base'],
-    function(urls, decorators, base) { {
+    function(urls, decorators, base) {
       var url = urls.url,
           include = urls.include,
           TemplateView = base.TemplateView;
 
-
       return [
           {% for url in urls %}
-              url({% for value in url %}{{ value|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}){% if not forloop.last %}, {% endif %}{% endfor %}
+              url({% for value in url %}{{ value|safe }}{% if not forloop.last %}, {% endif %}{% endfor %})  {% if not forloop.last %}, {% endif %}
+          {% endfor %}
       ];
     }
 );

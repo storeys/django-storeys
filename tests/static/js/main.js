@@ -41,7 +41,7 @@ define('settings', ['module'], function(module) {
     instance.PROJECT_APPS = [
       'storeys',
       'additional_app',
-      'additional_app2',
+      'excluded_app',
     ];
 
     instance.URL_LOGIN = '/accounts/login/';
@@ -57,12 +57,20 @@ define('settings', ['module'], function(module) {
   // });
 
 
-// require the unit tests.
+// urls tests.
 require(
-    ['QUnit', 'static/js/urls_test', 'settings'],
-    function(QUnit, urls_test, settings) {
-        urls_test.run();
+    ['QUnit', 'static/js/tests/urls', 'settings'],
+    function(QUnit, test_urls, settings) {
+        test_urls.run();
         QUnit.load();
         QUnit.start();
     }
+);
+
+// reverse tests.
+require(
+    ['QUnit', 'static/js/tests/reverse', 'settings'],
+        function(QUnit, test_reverse, settings) {
+            test_reverse.run();
+        }
 );

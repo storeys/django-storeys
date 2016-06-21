@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'storeys',
     'tests',
     'additional_app',
-    'additional_app2'
+    'excluded_app'
 ]
 
 MIDDLEWARE_CLASSES = [

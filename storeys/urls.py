@@ -17,5 +17,4 @@ non_exported_urlpatterns = (
     urlref(module_name='admin.site.urls'),
     # urlref(name='exclude2'),
     # urlref(name='test'),
-
 )
