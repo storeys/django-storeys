@@ -18,7 +18,7 @@ urlpatterns = patterns(
         name='receipts'
     ),
 
-    url(r'^test_success_2/(?P<word>\w+)/$',
+    url(r'^test_success_2/(?P<word>\w+)$',
         StoreysView.as_view(
             template_name='storeys_urls_js/main.html',
         ),

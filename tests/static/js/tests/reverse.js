@@ -1,12 +1,18 @@
 "use strict";
 
-// TODO: Exceptions tests:
-// - `params` wrong type check
-// - wrong args order
-// - nested arguments
-// - reverse() with `args` not found
-// - reverse() with `kwargs` not found
-
+/**
+* TODO:
+* TESTS:
+* - separate '/'
+* - separate `include()`
+*
+* Exceptions tests (Exception works, but tests wasn't realized):
+* - `params` wrong type check
+* - wrong args order
+* - nested arguments
+* - reverse() with `args` not found
+* - reverse() with `kwargs` not found
+*/
 
 define(
     ['settings'],
@@ -26,7 +32,7 @@ define(
                     urlresolver.reverse('receipts', {}, function(url){
                         test('[SUCCESS TEST WITHOUT ARGS] Numeric validation `reverse("receipts")`', function(t) {
                             expect(1);
-                            equal(url, '/test_success/', TEST_PREFIX + 'RegExp pattern "^test_success/$" ||| The return is "/test_success/".');
+                            equal(url, '/test_success/test_success/', TEST_PREFIX + 'RegExp pattern "^test_success/$" ||| But the return is "/test_success/test_success/". By the reason of include(``)');
                         })
                     })
 
@@ -38,11 +44,11 @@ define(
                         })
                     })
 
-                    urlresolver.reverse('receipts', {'word': 'asdsaasd1234567890_'}, function(url){
+                    urlresolver.reverse('receipts', {'word': 'asdsaasd_1234567890'}, function(url){
                         test('[SUCCESS `KWARG` TEST] Alphanumeric validation `reverse("receipts", {"word": "asdsaasd1234567890_"})`', function(t) {
 
                             expect(1);
-                            equal(url, '/test_success_2/asdsaasd1234567890_/', TEST_PREFIX + 'RegExp pattern is "^test_success_2/(\\?P<word>\\w+)/$" ||| The return is  "/test_success_3/asdsaasd1234567890_/".');
+                            equal(url, '/test_success_2/asdsaasd_1234567890', TEST_PREFIX + 'RegExp pattern is "^test_success_2/(\\?P<word>\\w+)$" ||| The return is  "/test_success_3/asdsaasd_1234567890".');
                         })
                     })
 
@@ -50,7 +56,7 @@ define(
                         test('[SUCCESS `KWARG` TEST] Complex email validation `reverse("receipts", {"email_from": "a@gmail.com", "email_to": "b@gmail.com"})`', function(t) {
 
                             expect(1);
-                            equal(url, '/test_success_3/from-a@gmail.com/to-b@gmail.com/', TEST_PREFIX + 'RegExp pattern is "^test_success_3/from-(\\?P<email_from>' + REGEXP_EMAIL.toString() + ')/to-(\\?P<email_from>' + REGEXP_EMAIL.toString() + ')/$" ||| The return is  /test_success_7/from-a@gmail.com/to-b@gmail.com/".');
+                            equal(url, '/test_success_3/from-a%40gmail.com/to-b%40gmail.com/', TEST_PREFIX + 'RegExp pattern is "^test_success_3/from-(\\?P<email_from>' + REGEXP_EMAIL.toString() + ')/to-(\\?P<email_from>' + REGEXP_EMAIL.toString() + ')/$" ||| The return is  /test_success_7/from-a%40gmail.com/to-b%40gmail.com/".');
                         })
                     })
 
@@ -59,7 +65,7 @@ define(
                         test('[SUCCESS `ARG` TEST] Email validation `reverse("receipts", ["test@gmail.com"])`', function(t) {
 
                             expect(1);
-                            equal(url, '/test_success_4/test@gmail.com/', TEST_PREFIX + 'RegExp pattern is "^test_success_4' + REGEXP_EMAIL.toString() + '/$ ||| The return is "/test_success_4/test@gmail.com/".');
+                            equal(url, '/test_success_4/test%40gmail.com/', TEST_PREFIX + 'RegExp pattern is "^test_success_4' + REGEXP_EMAIL.toString() + '/$ ||| The return is "/test_success_4/test%40gmail.com/".');
                         })
                     })
 
@@ -76,7 +82,7 @@ define(
                         test('[SUCCESS `ARG` TEST] Complex email and phone validation `reverse("receipts", ["test@gmail.com", "444-666-7777"])`', function(t) {
 
                             expect(1);
-                            equal(url, '/test_success_6/test@gmail.com/phone-444-666-7777/', TEST_PREFIX + 'RegExp pattern is `/test_success_6/' + REGEXP_EMAIL.toString() + '/phone-' + REGEXP_PHONE.toString() + '/` The return should be "/test_success_5/test@gmail.com/phone-444-666-7777/".');
+                            equal(url, '/test_success/test_success_6/test%40gmail.com/phone-444-666-7777/', TEST_PREFIX + 'RegExp pattern is `/test_success_6/' + REGEXP_EMAIL.toString() + '/phone-' + REGEXP_PHONE.toString() + '/` But the return should be "/test_success/test_success_5/test%40gmail.com/phone-444-666-7777/". By the reason of include(``)');
                         })
                     })
 
