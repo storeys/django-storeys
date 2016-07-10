@@ -26,9 +26,9 @@ define('settings', ['module'], function(module) {
     var config = module.config() || {},
         instance = {};
 
-    instance.DEFAULT_URL = '/receipts/';
+    instance.DEFAULT_URL = '/tests/';
     instance.ROOT_URLCONF = 'tests/static/tests/urls';
-    instance.ROOT_HASHCONF = 'app/hashes';
+    instance.ROOT_HASHCONF = 'tests/hashes';
     instance.MIDDLEWARE_CLASSES = [
     ];
 
@@ -39,7 +39,7 @@ define('settings', ['module'], function(module) {
     instance.STATIC_ROOT = './';
 
     instance.PROJECT_APPS = [
-      'storeys',
+      'tests',
       'additional_app',
       'excluded_app',
     ];
@@ -51,26 +51,26 @@ define('settings', ['module'], function(module) {
     return instance;
   });
 
-  // require(['storeys'], function(storeys) {
-  //   storeys
-  //     .start();
-  // });
+  require(['storeys'], function(storeys) {
+    storeys
+      .start();
+  });
 
 
-// urls tests.
-require(
-    ['QUnit', 'static/js/tests/urls', 'settings'],
-    function(QUnit, test_urls, settings) {
+  // urls tests.
+  require(
+      ['QUnit', 'static/js/tests/urls', 'settings'],
+      function(QUnit, test_urls, settings) {
         test_urls.run();
         QUnit.load();
         QUnit.start();
-    }
-);
+      }
+  );
 
-// reverse tests.
-require(
-    ['QUnit', 'static/js/tests/reverse', 'settings'],
-        function(QUnit, test_reverse, settings) {
-            test_reverse.run();
-        }
-);
+  // reverse tests.
+  require(
+      ['QUnit', 'static/js/tests/reverse', 'settings'],
+      function(QUnit, test_reverse, settings) {
+        test_reverse.run();
+      }
+  );

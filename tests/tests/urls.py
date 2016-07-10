@@ -11,6 +11,12 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test_success/', include('additional_app.urls')),
     url(r'^excluded_app/', include('excluded_app.urls')),
+    url('^tests/$', StoreysView.as_view(
+            template_name='main.html',
+        ),
+        name='tests'
+    ),
+
     url(r'^test_success_1/(?P<numeric>[0-9]+)/$',
         StoreysView.as_view(
             template_name='storeys_urls_js/main.html',

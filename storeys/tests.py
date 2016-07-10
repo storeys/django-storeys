@@ -21,7 +21,7 @@ class UrlsParseSuccess(TestCase):
 
         with open(os.path.join(settings.BASE_DIR, 'tests/static/tests/urls.js')) as f:
             file_content = f.read()
-        self.assertEqual(file_content.count("url("), 6)
+        self.assertEqual(file_content.count("url("), 7)
         self.assertEqual(file_content.count("test_success"), 6)
 
         # Check. 'static' folder wasn't created at the excluded app.
