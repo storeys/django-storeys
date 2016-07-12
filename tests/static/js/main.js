@@ -51,26 +51,26 @@ define('settings', ['module'], function(module) {
     return instance;
   });
 
-  require(['storeys'], function(storeys) {
-    storeys
-      .start();
-  });
 
-
-  // urls tests.
+  // tests.
   require(
-      ['QUnit', 'static/js/tests/urls', 'settings'],
-      function(QUnit, test_urls, settings) {
-        test_urls.run();
+      [   'storeys',
+          'QUnit',
+          'settings',
+          'static/js/tests/urls',
+          'static/js/tests/reverse',
+          'static/js/tests/templatetag_url',
+      ],
+      function(storeys, QUnit, settings, test_urls, test_reverse, templatetag_url) {
+
+        storeys.start();
+
         QUnit.load();
         QUnit.start();
-      }
-  );
 
-  // reverse tests.
-  require(
-      ['QUnit', 'static/js/tests/reverse', 'settings'],
-      function(QUnit, test_reverse, settings) {
+        test_urls.run();
         test_reverse.run();
+        templatetag_url.run();
+
       }
   );

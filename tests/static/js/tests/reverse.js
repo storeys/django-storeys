@@ -18,6 +18,8 @@ define(
     ['settings'],
     function(settings) {
         var TEST_PREFIX = '[RegExp test]: ',
+            TEST_PREFIX_KWARGS = '[SUCCESS. `KWARG` TEST]',
+            TEST_PREFIX_ARGS = '[SUCCESS. `ARG` TEST]',
             REGEXP_NUMERIC = /\d+/,
             REGEXP_WORD = /\w+/,
             REGEXP_PHONE = /((\d{3})-(\d{3})-(\d{4}))/,
@@ -38,14 +40,14 @@ define(
 
                     // SUCCESS `KWARGS` TESTS
                     urlresolver.reverse('receipts', {'numeric': '1234567890'}, function(url){
-                        test('[SUCCESS `KWARG` TEST] Numeric validation `reverse("receipts", {"numeric": "1234567890"})`', function(t) {
+                        test(TEST_PREFIX_KWARGS + 'Numeric validation `reverse("receipts", {"numeric": "1234567890"})`', function(t) {
                             expect(1);
                             equal(url, '/test_success_1/1234567890/', TEST_PREFIX + 'RegExp pattern is "^test_success_1/(\\?P<numeric>[0-9]+)/$" ||| The return is "/test_success_2/1234567890/".');
                         })
                     })
 
                     urlresolver.reverse('receipts', {'word': 'asdsaasd_1234567890'}, function(url){
-                        test('[SUCCESS `KWARG` TEST] Alphanumeric validation `reverse("receipts", {"word": "asdsaasd1234567890_"})`', function(t) {
+                        test(TEST_PREFIX_KWARGS + 'Alphanumeric validation `reverse("receipts", {"word": "asdsaasd1234567890_"})`', function(t) {
 
                             expect(1);
                             equal(url, '/test_success_2/asdsaasd_1234567890', TEST_PREFIX + 'RegExp pattern is "^test_success_2/(\\?P<word>\\w+)$" ||| The return is  "/test_success_3/asdsaasd_1234567890".');
@@ -53,7 +55,7 @@ define(
                     })
 
                     urlresolver.reverse('receipts', {'email_from': 'a@gmail.com', 'email_to': 'b@gmail.com'}, function(url){
-                        test('[SUCCESS `KWARG` TEST] Complex email validation `reverse("receipts", {"email_from": "a@gmail.com", "email_to": "b@gmail.com"})`', function(t) {
+                        test(TEST_PREFIX_KWARGS + 'Complex email validation `reverse("receipts", {"email_from": "a@gmail.com", "email_to": "b@gmail.com"})`', function(t) {
 
                             expect(1);
                             equal(url, '/test_success_3/from-a%40gmail.com/to-b%40gmail.com/', TEST_PREFIX + 'RegExp pattern is "^test_success_3/from-(\\?P<email_from>' + REGEXP_EMAIL.toString() + ')/to-(\\?P<email_from>' + REGEXP_EMAIL.toString() + ')/$" ||| The return is  /test_success_7/from-a%40gmail.com/to-b%40gmail.com/".');
@@ -62,7 +64,7 @@ define(
 
                     // SUCCESS `ARGS` TESTS
                     urlresolver.reverse('receipts', ['test@gmail.com'], function(url){
-                        test('[SUCCESS `ARG` TEST] Email validation `reverse("receipts", ["test@gmail.com"])`', function(t) {
+                        test(TEST_PREFIX_ARGS + 'Email validation `reverse("receipts", ["test@gmail.com"])`', function(t) {
 
                             expect(1);
                             equal(url, '/test_success_4/test%40gmail.com/', TEST_PREFIX + 'RegExp pattern is "^test_success_4' + REGEXP_EMAIL.toString() + '/$ ||| The return is "/test_success_4/test%40gmail.com/".');
@@ -70,7 +72,7 @@ define(
                     })
 
                     urlresolver.reverse('receipts', ['444-666-7777'], function(url){
-                        test('[SUCCESS `ARG` TEST] Phone validation `reverse("receipts", ["444-666-7777"])`', function(t) {
+                        test(TEST_PREFIX_ARGS + 'Phone validation `reverse("receipts", ["444-666-7777"])`', function(t) {
 
                             expect(1);
                             equal(url, '/test_success_5/phone-444-666-7777/', TEST_PREFIX + 'RegExp pattern is `/test_success_5'+ REGEXP_PHONE.toString() +'/` ||| The return is "/test_success_5/phone-444-666-7777/".');
@@ -79,7 +81,7 @@ define(
 
 
                     urlresolver.reverse('receipts', ['test@gmail.com', '444-666-7777'], function(url){
-                        test('[SUCCESS `ARG` TEST] Complex email and phone validation `reverse("receipts", ["test@gmail.com", "444-666-7777"])`', function(t) {
+                        test(TEST_PREFIX_ARGS + 'Complex email and phone validation `reverse("receipts", ["test@gmail.com", "444-666-7777"])`', function(t) {
 
                             expect(1);
                             equal(url, '/test_success/test_success_6/test%40gmail.com/phone-444-666-7777/', TEST_PREFIX + 'RegExp pattern is `/test_success_6/' + REGEXP_EMAIL.toString() + '/phone-' + REGEXP_PHONE.toString() + '/` But the return should be "/test_success/test_success_5/test%40gmail.com/phone-444-666-7777/". By the reason of include(``)');
