@@ -5,80 +5,61 @@
 */
 
 define(
-    ['require', 'settings'],
-    function(require, settings) {
+    ['require', 'settings', 'QUnit'],
+    function(require, settings, QUnit) {
 
         var run = function() {
             require(
                 ['slib/nunjucks', '/submodules/storeys/storeys/js/template/defaulttags.js'],
                 function(nunjucks, defaulttags) {
 
-                    var LOG_PREFIX = "[SUCCESS. TEMPLATETAG `URL`]",
+                    var LOG_PREFIX = "[ defaulttags.url ]",
                         env = new nunjucks.configure();
+
                     env.addExtension('defaulttags', defaulttags);
 
+                    QUnit.asyncTest(LOG_PREFIX, function (assert) {
+                        expect(8);
+                        QUnit.stop(7);
 
-                    var res = env.renderString("{% url 'tests' %}", {}, function(err, res){
-                        test(LOG_PREFIX + ' Render url without params`', function(assert) {
-                            expect(1);
-
-                            equal(res, '/tests/');
+                        env.renderString("{% url 'tests' %}", {}, function(err, res){
+                            assert.strictEqual(res, '/tests/', 'Render url without params');
+                            QUnit.start();
                         });
-                    });
 
-                    var res = env.renderString("{% url 'receipts' %}", {}, function(err, res){
-                        test(LOG_PREFIX + ' Render subapp-url without params`', function(assert) {
-                            expect(1);
-
-                            equal(res, '/test_success/test_success/');
+                        env.renderString("{% url 'receipts' %}", {}, function(err, res){
+                            assert.equal(res, '/test_success/test_success/', 'Render subapp-url without params');
+                            QUnit.start();
                         });
-                    });
 
-                    var res = env.renderString("{% url 'receipts', numeric='1234567890' %}", {}, function(err, res){
-                        test(LOG_PREFIX + ' Render with named numeric param`', function(assert) {
-                            expect(1);
-
-                            equal(res, '/test_success_1/1234567890/');
+                        env.renderString("{% url 'receipts', numeric='1234567890' %}", {}, function(err, res){
+                            equal(res, '/test_success_1/1234567890/', 'Render url with named numeric param');
+                            QUnit.start();
                         });
-                    });
 
-                    var res = env.renderString("{% url 'receipts', word='asdsaasd_1234567890' %}", {}, function(err, res){
-                        test(LOG_PREFIX + ' Render with named alphanumeric param`', function(assert) {
-                            expect(1);
-
-                            equal(res, '/test_success_2/asdsaasd_1234567890');
+                        env.renderString("{% url 'receipts', word='asdsaasd_1234567890' %}", {}, function(err, res){
+                            equal(res, '/test_success_2/asdsaasd_1234567890', 'Render url with named alphanumeric param');
+                            QUnit.start();
                         });
-                    });
 
-                    var res = env.renderString("{% url 'receipts', email_from='a@gmail.com', email_to='b@gmail.com' %}", {}, function(err, res){
-                        test(LOG_PREFIX + ' Render with named email params`', function(assert) {
-                            expect(1);
-
-                            equal(res, '/test_success_3/from-a%40gmail.com/to-b%40gmail.com/');
+                        env.renderString("{% url 'receipts', email_from='a@gmail.com', email_to='b@gmail.com' %}", {}, function(err, res){
+                            equal(res, '/test_success_3/from-a%40gmail.com/to-b%40gmail.com/', 'Render url with named email params');
+                            QUnit.start();
                         });
-                    });
 
-                    var res = env.renderString("{% url 'receipts', 'test@gmail.com' %}", {}, function(err, res){
-                        test(LOG_PREFIX + ' Render with simple email param`', function(assert) {
-                            expect(1);
-
-                            equal(res, '/test_success_4/test%40gmail.com/');
+                        env.renderString("{% url 'receipts', 'test@gmail.com' %}", {}, function(err, res){
+                            equal(res, '/test_success_4/test%40gmail.com/', 'Render url with simple email param');
+                            QUnit.start();
                         });
-                    });
 
-                    var res = env.renderString("{% url 'receipts', '444-666-7777' %}", {}, function(err, res){
-                        test(LOG_PREFIX + ' Render with simple phone param`', function(assert) {
-                            expect(1);
-
-                            equal(res, '/test_success_5/phone-444-666-7777/');
+                        env.renderString("{% url 'receipts', '444-666-7777' %}", {}, function(err, res){
+                            equal(res, '/test_success_5/phone-444-666-7777/', 'Render url with simple phone param');
+                            QUnit.start();
                         });
-                    });
 
-                    var res = env.renderString("{% url 'receipts', 'test@gmail.com', '444-666-7777' %}", {}, function(err, res){
-                        test(LOG_PREFIX + ' Render with complex params`', function(assert) {
-                            expect(1);
-
-                            equal(res, '/test_success/test_success_6/test%40gmail.com/phone-444-666-7777/');
+                        env.renderString("{% url 'receipts', 'test@gmail.com', '444-666-7777' %}", {}, function(err, res){
+                            equal(res, '/test_success/test_success_6/test%40gmail.com/phone-444-666-7777/', 'Render url with many simple params');
+                            QUnit.start();
                         });
                     });
 
