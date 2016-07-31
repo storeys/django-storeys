@@ -4,6 +4,7 @@ require.config({
     paths: {
         'jquery' : 'http://code.jquery.com/jquery-1.12.1.min',
         'QUnit': 'static/libs/qunit',
+        'xregexp': "../submodules/storeys/submodules/xregexp/xregexp-all",
         'slib': '../submodules/storeys/storeys/lib'
     },
     shim: {
@@ -18,6 +19,9 @@ require.config({
            exports: 'nunjucks',
            init: function() {
            }
+       },
+       'xregexp': {
+           exports: "XRegExp",
        }
     }
 });
@@ -57,20 +61,18 @@ define('settings', ['module'], function(module) {
       [   'storeys',
           'QUnit',
           'settings',
-          'static/js/tests/urls',
+          'static/js/tests/resolve',
           'static/js/tests/reverse',
-          'static/js/tests/templatetag_url',
+          'static/js/tests/templatetags/url'
       ],
-      function(storeys, QUnit, settings, test_urls, test_reverse, templatetag_url) {
-
+      function(storeys, QUnit, settings, test_resolve, test_reverse, test_templatetag_url) {
         storeys.start();
 
         QUnit.load();
         QUnit.start();
 
-        test_urls.run();
+        test_resolve.run();
         test_reverse.run();
-        templatetag_url.run();
-
+        test_templatetag_url.run();
       }
   );

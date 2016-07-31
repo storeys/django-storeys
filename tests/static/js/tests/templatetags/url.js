@@ -37,8 +37,8 @@ define(
                             QUnit.start();
                         });
 
-                        env.renderString("{% url 'receipts', word='asdsaasd_1234567890' %}", {}, function(err, res){
-                            equal(res, '/test_success_2/asdsaasd_1234567890', 'Render url with named alphanumeric param');
+                        env.renderString("{% url 'receipts', word='test_1234567890' %}", {}, function(err, res){
+                            equal(res, '/test_success_2/test_1234567890', 'Render url with named alphanumeric param');
                             QUnit.start();
                         });
 

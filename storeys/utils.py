@@ -84,7 +84,7 @@ def parse_url_node(node):
         for arg in node.args:
             if isinstance(arg, ast.Str):
                 # escape any special characters for JS RegExp
-                yield ("'%s'" % arg.s).replace('?P','\\?P').replace("\\","\\\\")
+                yield ("'%s'" % arg.s).replace("\\","\\\\")
             elif isinstance(arg, ast.Call):
                 kwargs = []
                 for kw_obj in node.args[1].keywords:
