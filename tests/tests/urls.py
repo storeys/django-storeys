@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url, include
 from storeys.views import StoreysView
 from storeys.utils import urlref
 from django.views.generic.base import TemplateView
-
+from django.contrib.staticfiles.views import serve as static_serve
 
 
 urlpatterns = patterns(
@@ -11,12 +11,11 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test_success/', include('additional_app.urls')),
     url(r'^excluded_app/', include('excluded_app.urls')),
-    url('^tests/$', StoreysView.as_view(
-            template_name='main.html',
+    url('^tests/$', TemplateView.as_view(
+            template_name='index.html',
         ),
         name='tests'
     ),
-
     url(r'^test_success_1/(?P<numeric>[0-9]+)/$',
         StoreysView.as_view(
             template_name='storeys_urls_js/main.html',
@@ -56,6 +55,8 @@ urlpatterns = patterns(
         ),
         name='exclude'
     ),
+    # Needed to run tests
+    (r'^(?P<path>.*)$', static_serve)
 )
 
 
