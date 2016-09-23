@@ -3,13 +3,12 @@ from django.conf import settings
 from django.test import TestCase
 from django.template import TemplateDoesNotExist
 from django.core.management import call_command
-from storeys.management.commands.collectstatic_storeys import StoreysUrlsNotFound
-
+from storeys.management.commands.collect_storeys_routes import StoreysUrlsNotFound
 
 class UrlsParseSuccess(TestCase):
 
     def test_urls_parse_success(self):
-        call_command('collectstatic_storeys', *['tests'], **{})
+        call_command('collect_storeys_routes', *['tests'], **{})
         self.assertTrue(os.path.join(settings.BASE_DIR, 'additional_app/static/additional_app/urls.js'))
         self.assertTrue(os.path.join(settings.BASE_DIR, 'tests/static/storeys/urls.js'))
 
@@ -39,7 +38,7 @@ class UrlsParseErrors(TestCase):
         file_write(file_path, content.replace('storeys_urls_js/main.html',
                                               'notexist/main.html'))
         with self.assertRaises(TemplateDoesNotExist) as e:
-            call_command('collectstatic_storeys', *['tests'], **{})
+            call_command('collect_storeys_routes', *['tests'], **{})
         file_write(file_path, content)
 
     def test_urls_parse_entries_not_found(self):
@@ -54,7 +53,7 @@ class UrlsParseErrors(TestCase):
 
         file_write(file_path, empty_content)
         with self.assertRaises(StoreysUrlsNotFound) as e:
-            call_command('collectstatic_storeys', *['tests'], **{})
+            call_command('collect_storeys_routes', *['tests'], **{})
         file_write(file_path, content)
 
 
