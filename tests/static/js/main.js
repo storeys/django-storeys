@@ -4,6 +4,7 @@ require.config({
     paths: {
         'jquery' : 'http://code.jquery.com/jquery-1.12.1.min',
         'QUnit': 'static/libs/qunit',
+        'xregexp': "../submodules/storeys/submodules/xregexp/xregexp-all",
         'slib': '../submodules/storeys/storeys/lib'
     },
     shim: {
@@ -18,6 +19,9 @@ require.config({
            exports: 'nunjucks',
            init: function() {
            }
+       },
+       'xregexp': {
+           exports: "XRegExp",
        }
     }
 });
@@ -26,9 +30,9 @@ define('settings', ['module'], function(module) {
     var config = module.config() || {},
         instance = {};
 
-    instance.DEFAULT_URL = '/receipts/';
+    instance.DEFAULT_URL = '/tests/';
     instance.ROOT_URLCONF = 'tests/static/tests/urls';
-    instance.ROOT_HASHCONF = 'app/hashes';
+    instance.ROOT_HASHCONF = 'tests/hashes';
     instance.MIDDLEWARE_CLASSES = [
     ];
 
@@ -39,9 +43,9 @@ define('settings', ['module'], function(module) {
     instance.STATIC_ROOT = './';
 
     instance.PROJECT_APPS = [
-      'storeys',
+      'tests',
       'additional_app',
-      'additional_app2',
+      'excluded_app',
     ];
 
     instance.URL_LOGIN = '/accounts/login/';
@@ -51,18 +55,24 @@ define('settings', ['module'], function(module) {
     return instance;
   });
 
-  // require(['storeys'], function(storeys) {
-  //   storeys
-  //     .start();
-  // });
 
+  // tests.
+  require(
+      [   'storeys',
+          'QUnit',
+          'settings',
+          'static/js/tests/resolve',
+          'static/js/tests/reverse',
+          'static/js/tests/templatetags/url'
+      ],
+      function(storeys, QUnit, settings, test_resolve, test_reverse, test_templatetag_url) {
+        storeys.start();
 
-// require the unit tests.
-require(
-    ['QUnit', 'static/js/urls_test', 'settings'],
-    function(QUnit, urls_test, settings) {
-        urls_test.run();
         QUnit.load();
         QUnit.start();
-    }
-);
+
+        test_resolve.run();
+        test_reverse.run();
+        test_templatetag_url.run();
+      }
+  );

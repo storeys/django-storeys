@@ -3,6 +3,7 @@ import os
 import ast
 import shutil
 from django.template import loader
+from django.template.loader import render_to_string
 
 
 class StoreysUrlsParseException(Exception):
@@ -82,19 +83,21 @@ def parse_url_node(node):
     else:
         for arg in node.args:
             if isinstance(arg, ast.Str):
-                yield "'%s'" % arg.s
+                # escape any special characters for JS RegExp
+                yield ("'%s'" % arg.s).replace("\\","\\\\")
             elif isinstance(arg, ast.Call):
                 kwargs = []
                 for kw_obj in node.args[1].keywords:
                     if kw_obj.arg == 'template_name':
                         loader.get_template(kw_obj.value.s)
                     kwargs.append("'%s'" % kw_obj.value.s)
-                yield "%s.%s(%s)" % (
-                    # n_node.value.id,
-                    'TemplateView',
-                    n_node.attr,
-                    ', '.join(kwargs)
-                )
+                yield render_to_string('../templates/storeys_urls_js/js_template.html', {'url': kwargs[0]})
+                # yield "%s.%s(%s)" % (
+                #     # n_node.value.id,
+                #     'view',
+                #     n_node.attr,
+                #     ', '.join(kwargs)
+                # )
     for kwarg in node.keywords:
         yield "'%s'" % kwarg.value.s
 

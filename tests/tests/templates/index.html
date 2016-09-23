@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,10 +13,10 @@
       }
     </style>
     <!-- <link href="./css/storeys.css" rel="stylesheet" > -->
-    <link rel="stylesheet" href="static/css/qunit.css">
+    <link rel="stylesheet" href="{% static "tests/static/css/qunit.css" %}">
     <script type="text/javascript">
       var require = {
-        baseUrl: '../tests/',
+        baseUrl: '/tests/',
         config: {
           settings: {
             // settings for storeys app
@@ -46,7 +48,7 @@
   <body>
       <div id="qunit"></div>
       <div id="qunit-fixture"></div>
-      <script data-main="static/js/main" src="../submodules/storeys/submodules/requirejs/require.js"
+      <script data-main="{% static "tests/static/js/main.js" %}" src="{% static "submodules/storeys/submodules/requirejs/require.js" %}"
               type="text/javascript" charset="utf-8">
       </script>
   </body>

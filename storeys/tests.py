@@ -3,29 +3,28 @@ from django.conf import settings
 from django.test import TestCase
 from django.template import TemplateDoesNotExist
 from django.core.management import call_command
-from storeys.management.commands.collect_storeyjs_routes import StoreysUrlsNotFound
-
+from storeys.management.commands.collect_storeys_routes import StoreysUrlsNotFound
 
 class UrlsParseSuccess(TestCase):
 
     def test_urls_parse_success(self):
-        call_command('collect_storeyjs_routes', *['tests'], **{})
+        call_command('collect_storeys_routes', *['tests'], **{})
         self.assertTrue(os.path.join(settings.BASE_DIR, 'additional_app/static/additional_app/urls.js'))
         self.assertTrue(os.path.join(settings.BASE_DIR, 'tests/static/storeys/urls.js'))
 
         with open(os.path.join(settings.BASE_DIR, 'additional_app/static/additional_app/urls.js')) as f:
             file_content = f.read()
-        self.assertEqual(file_content.count("url("), 2)
+        self.assertEqual(file_content.count("url("), 3)
         self.assertEqual(file_content.count(
             "url("), file_content.count("test_success"))
 
         with open(os.path.join(settings.BASE_DIR, 'tests/static/tests/urls.js')) as f:
             file_content = f.read()
-        self.assertEqual(file_content.count("url("), 2)
-        self.assertEqual(file_content.count("test_success"), 2)
+        self.assertEqual(file_content.count("url("), 7)
+        self.assertEqual(file_content.count("test_success"), 6)
 
         # Check. 'static' folder wasn't created at the excluded app.
-        self.assertFalse(os.path.isdir(os.path.join(settings.BASE_DIR, 'additional_app2/static')))
+        self.assertFalse(os.path.isdir(os.path.join(settings.BASE_DIR, 'excluded_app/static')))
 
 
 class UrlsParseErrors(TestCase):
@@ -39,7 +38,7 @@ class UrlsParseErrors(TestCase):
         file_write(file_path, content.replace('storeys_urls_js/main.html',
                                               'notexist/main.html'))
         with self.assertRaises(TemplateDoesNotExist) as e:
-            call_command('collect_storeyjs_routes', *['tests'], **{})
+            call_command('collect_storeys_routes', *['tests'], **{})
         file_write(file_path, content)
 
     def test_urls_parse_entries_not_found(self):
@@ -54,7 +53,7 @@ class UrlsParseErrors(TestCase):
 
         file_write(file_path, empty_content)
         with self.assertRaises(StoreysUrlsNotFound) as e:
-            call_command('collect_storeyjs_routes', *['tests'], **{})
+            call_command('collect_storeys_routes', *['tests'], **{})
         file_write(file_path, content)
 
 

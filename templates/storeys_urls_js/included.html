@@ -6,7 +6,8 @@ define(
 
       return [
           {% for url in urls %}
-              url({% for value in url %}{{ value|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}){% if not forloop.last %}, {% endif %}{% endfor %}
+              url({% for value in url %}{{ value|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}){% if not forloop.last %}, {% endif %}
+          {% endfor %}
       ];
     }
 );
