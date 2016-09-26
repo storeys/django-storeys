@@ -35,6 +35,9 @@
               DEFAULT_URL: '{{ request.path }}'
             }
           },
+          paths: {
+            'jquery': '//code.jquery.com/jquery-1.12.1.min'
+          },
           packages: [
             {
               name: 'storeys',
@@ -46,6 +49,17 @@
               location: 'storeys/lib',
             }
           ],
+          shim: {
+            'slib/nunjucks': {
+              exports: 'nunjucks'
+            },
+            'slib/xregexp': {
+              exports: "XRegExp"
+            },
+            'jquery': {
+              exports: '$'
+            },
+          },
           waitSeconds: 15
         };
     </script>
