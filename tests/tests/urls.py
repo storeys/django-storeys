@@ -3,15 +3,14 @@ from django.conf.urls import patterns, url, include
 from storeys.views import StoreysView
 from storeys.utils import urlref
 from django.views.generic.base import TemplateView
-from django.contrib.staticfiles.views import serve as static_serve
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns(
     'test',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test_success/', include('additional_app.urls')),
     url(r'^excluded_app/', include('excluded_app.urls')),
-    url('^tests/$', TemplateView.as_view(
+    url(r'^tests/$', TemplateView.as_view(
             template_name='index.html',
         ),
         name='tests'
@@ -55,9 +54,7 @@ urlpatterns = patterns(
         ),
         name='exclude'
     ),
-    # Needed to run tests
-    (r'^(?P<path>.*)$', static_serve)
-)
+) + staticfiles_urlpatterns()
 
 
 non_exported_urlpatterns = (

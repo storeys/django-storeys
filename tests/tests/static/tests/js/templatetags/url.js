@@ -10,7 +10,7 @@ define(
 
         var run = function() {
             require(
-                ['slib/nunjucks', '/submodules/storeys/storeys/js/template/defaulttags.js'],
+                ['slib/nunjucks', 'storeys/template/defaulttags'],
                 function(nunjucks, defaulttags) {
 
                     var LOG_PREFIX = "[ defaulttags.url ]",
