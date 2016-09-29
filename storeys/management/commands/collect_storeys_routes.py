@@ -76,8 +76,8 @@ class Command(BaseCommand):
         settings_path = '%s/%s' % (base_path, root_urlconf_path)
         settings_root = root_urlconf_path
 
-        if os.path.isdir('%s/static' % settings_path):
-            shutil.rmtree('%s/static' % settings_path)
+        # if os.path.isdir('%s/static' % settings_path):
+        #    shutil.rmtree('%s/static' % settings_path)
         create_js_file(settings_path+ '/urls.py', base_path,
                        'main.html', ne_names, ne_module_names)
 
@@ -88,8 +88,8 @@ class Command(BaseCommand):
             if os.path.isdir(dir_path):
                 subdir_list = os.listdir(dir_path)
                 if 'urls.py' in subdir_list and settings_path != dir_path:
-                    if 'static' in subdir_list:
-                        shutil.rmtree('%s/static' % dir_path)
+                    # if 'static' in subdir_list:
+                    #    shutil.rmtree('%s/static' % dir_path)
                     if not is_module_excluded(dir_path.replace('/', '.'), ne_module_names):
                         create_js_file('%s/urls.py' % dir_path, base_path,
                                        'included.html', [], [])
