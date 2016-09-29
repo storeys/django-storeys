@@ -15,60 +15,40 @@
         var require = {
           baseUrl: '{% static "" %}',
           config: {
-            'storeys/index': {
-              verbose: false
-            },
-            'storeys/template/loader': {
-              verbose: false
-            },
-            'storeys/core/urlresolver': {
-              verbose: false
-            },
-            'storeys/core/handlers/base': {
-              verbose: false
-            },
-            settings: {
-              ROOT_URLCONF: '{% static storeys.app_path %}urls.js',
-              ROOT_HASHCONF: '{% static storeys.app_path %}hashes.js',
-              STATIC_ROOT: '{% static "" %}',
-              URL_ROOT: '/',
-              DEFAULT_URL: '{{ request.path }}'
+            'storeys/conf/settings': {
+              'settings': {
+                ROOT_URLCONF: '{% static storeys.app_path %}urls.js',
+                ROOT_HASHCONF: '{% static storeys.app_path %}hashes.js',
+                URL_ROOT: '/',
+                DEFAULT_URL: '{{ request.path }}',
+                PROJECT_APPS: {{ settings.STOREYS_APPS | safe }}
+              }
             }
           },
           paths: {
             'jquery': '//code.jquery.com/jquery-1.12.1.min'
           },
-          packages: [
-            {
-              name: 'storeys',
-              location: 'storeys/js',
-              main: 'index'
-            },
-            {
-              name: 'slib',
-              location: 'storeys/lib',
-            }
-          ],
           shim: {
-            'slib/nunjucks': {
-              exports: 'nunjucks'
-            },
-            'slib/xregexp': {
-              exports: "XRegExp"
-            },
-            'jquery': {
-              exports: '$'
-            },
+            'jquery': { exports: '$' },
           },
           waitSeconds: 15
         };
     </script>
     {% block pre_require_js %}{% endblock %}
-    <script data-main="{% static storeys.app_path %}main.js" src="{% static 'storeys/lib/require.js' %}"
+    <script data-main="{% static 'storeys/js/main.js' %}" src="{% static 'storeys/lib/require.js' %}"
             type="text/javascript" charset="utf-8">
+    </script>
+    <script>
+      var requireDefine = define;
+      define = function redefine() {
+        console.log(arguments);
+        requireDefine.apply(null, arguments);
+      };
     </script>
   </head>
   <body id="{% block bodyid %}{% endblock %}" class="storeys loading {% block bodyclasses %}{% endblock %}" {% block bodyattrs %}{% endblock %}>
-    {% block content %}{% endblock %}
+    {% block content %}
+      {% if prerender_content %}{% include prerender_content %}{% endif %}
+    {% endblock %}
   </body>
 </html>

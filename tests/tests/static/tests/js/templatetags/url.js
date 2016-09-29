@@ -5,7 +5,7 @@
 */
 
 define(
-    ['require', 'settings', 'QUnit'],
+    ['require', 'storeys/conf/settings', 'QUnit'],
     function(require, settings, QUnit) {
 
         var run = function() {

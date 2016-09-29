@@ -10,6 +10,7 @@ from django.views.generic.base import TemplateView
 EXPORTED_SETTINGS = ['STOREYS_APPS']
 
 class StoreysView(TemplateView):
+    template_name = 'storeys/base.html'
     prerender_content = None
 
     def get_context_data(self, **kwargs):

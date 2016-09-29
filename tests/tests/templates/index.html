@@ -16,20 +16,18 @@
       var require = {
         baseUrl: '{% static "" %}',
         config: {
-          settings: {
-            // settings for storeys app
-          },
-          'storeys/index': {
-            verbose: true
-          },
-          'storeys/template/loader': {
-            verbose: true
-          },
-          'storeys/core/urlresolver': {
-            verbose: true
-          },
-          'storeys/core/handlers/base': {
-            verbose: true
+          'storeys/conf/settings': {
+            settings: {
+              ROOT_URLCONF: '{% static "tests/js/urls.js" %}',
+              ROOT_HASHCONF: '{% static "tests/js/hashes.js" %}',
+              URL_ROOT: '/',
+              DEFAULT_URL: '{{ request.path }}',
+              PROJECT_APPS: [
+                'tests',
+                'addtional_app',
+                'excluded_app'
+              ]
+            }
           }
         },
         paths: {
@@ -55,69 +53,33 @@
         }
       }
     </script>
-
   </head>
   <body>
       <div id="qunit"></div>
       <div id="qunit-fixture"></div>
-      <script data-main="{% static 'tests/js/main.js' %}" src="{% static 'storeys/lib/require.js' %}"
+      <script data-main="{% static 'storeys/js/main.js' %}" src="{% static 'storeys/lib/require.js' %}"
               type="text/javascript" charset="utf-8">
       </script>
       <script>
-        define('settings', ['module'], function(module) {
-          var config = module.config() || {},
-                  instance = {};
+        require(
+          ['QUnit', 'tests/js/resolve', 'tests/js/reverse', 'tests/js/templatetags/url'],
+          function(QUnit, test_resolve, test_reverse, test_templatetag_url) {
+            QUnit.load();
+            QUnit.start();
 
-          instance.DEFAULT_URL = '/tests/';
-          instance.ROOT_URLCONF = 'tests/js/urls';
-          instance.ROOT_HASHCONF = 'tests/js/hashes';
-          instance.MIDDLEWARE_CLASSES = [
-          ];
-
-          instance.URL_ROOT = 'http://storeys-django-starter.herokuapp.com';
-          instance.URL_API_ROOT =  instance.URL_ROOT + '/api/v1';
-          instance.URL_API_LOGIN = instance.URL_API_ROOT + '/login/';
-          instance.URL_API_LOGOUT = instance.URL_API_ROOT + '/logout/';
-          instance.STATIC_ROOT = './';
-
-          instance.PROJECT_APPS = [
-            'tests',
-            'additional_app',
-            'excluded_app'
-          ];
-
-          instance.URL_LOGIN = '/accounts/login/';
-          instance.URL_PENDING_ACTIVATION = '/accounts/pending/';
-          instance.REDIRECT_FIELD_NAME = 'next';
-
-          return instance;
-        });
-
-        require(['storeys', 'QUnit'], function(storeys, QUnit) {
-          storeys.start();
-
-          require(
-            ['tests/js/resolve', 'tests/js/reverse', 'tests/js/templatetags/url'],
-            function(test_resolve, test_reverse, test_templatetag_url) {
-              storeys.start();
-
-              QUnit.load();
-              QUnit.start();
-
-              test_resolve.run();
-              test_reverse.run();
-              test_templatetag_url.run();
-            }
-          );
-        });
+            test_resolve.run();
+            test_reverse.run();
+            test_templatetag_url.run();
+          }
+        );
       </script>
-      <script>
+      <!-- <script>
+        // For debugging require module loading
         var requireDefine = define;
         define = function redefine() {
           console.log(arguments);
           requireDefine.apply(null, arguments);
         };
-      </script>
-
+      </script> -->
   </body>
 </html>

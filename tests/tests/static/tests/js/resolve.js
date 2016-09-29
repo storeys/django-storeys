@@ -1,7 +1,7 @@
 "use strict";
 
 define(
-    ['settings'],
+    ['storeys/conf/settings'],
     function(settings) {
 
         var TEST_PREFIX = '[ urlresolver.resolve ]';

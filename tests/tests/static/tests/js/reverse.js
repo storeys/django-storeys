@@ -15,7 +15,7 @@
 */
 
 define(
-    ['settings'],
+    ['storeys/conf/settings'],
     function(settings) {
         var TEST_PREFIX = '[ urlresolver.reverse ]',
             REGEXP_NUMERIC = /\d+/,
