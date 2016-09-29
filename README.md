@@ -90,14 +90,35 @@ And then just visit `127.0.0.1:8000/tests/` into your browser
 
 
 
-## To Run Tests
+## Test
 
+### Django Tests
 ```
+git submodule sync --recursive
 git submodule update --init --recursive
 
-pip install virtualenv
-virtualenv venv/
-source ./venv/bin/activate
-pip install -r requirements.txt
-python tests/manage.py
+./bin/test.sh test
 ```
+
+### QUnit Tests
+```
+git submodule sync --recursive
+git submodule update --init --recursive
+
+./bin/test.sh runserver
+
+## Open browser at http://localhost:8000/tests
+```
+
+
+## Examples
+
+```
+git submodule sync --recursive
+git submodule update --init --recursive
+
+./bin/example.sh runserver
+
+## Open browser at http://localhost:8000/
+```
+
